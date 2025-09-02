@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#2196F3">
+    <title>CA Revalidation B10 - Offline App</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🏥</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="header-title">CA Revalidation B10</h1>
+            <p class="header-subtitle">ระบบจัดการการสุ่มตัวอย่างแบบ Offline</p>
+        </header>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab-button active" data-tab="unsampled">
+                <span class="tab-icon">⏳</span>
+                <div class="tab-text">
+                    ยังไม่สุ่ม
+                    <span class="tab-count" id="unsampled-count">0</span>
+                </div>
+            </button>
+            <button class="tab-button" data-tab="sampled">
+                <span class="tab-icon">✅</span>
+                <div class="tab-text">
+                    สุ่มแล้ว
+                    <span class="tab-count" id="sampled-count">0</span>
+                </div>
+            </button>
+            <button class="tab-button" data-tab="favorites">
+                <span class="tab-icon">⭐</span>
+                <div class="tab-text">
+                    รายการโปรด
+                    <span class="tab-count" id="favorites-count">0</span>
+                </div>
+            </button>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <div class="filter-group">
+                <label class="filter-label">ชั้น:</label>
+                <div class="filter-buttons" id="floor-filters">
+                    <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
+                </div>
+            </div>
+
+            <div class="filter-group">
+                <label class="filter-label">สถานะ:</label>
+                <div class="filter-buttons" id="using-filters">
+                    <button class="filter-btn active" data-filter="all">ทั้งหมด</button>
+                    <button class="filter-btn" data-filter="true">มีการใช้งาน</button>
+                    <button class="filter-btn" data-filter="false">ไม่มีการใช้งาน</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Room List -->
+        <div class="room-list" id="room-list">
+            <!-- Room cards will be inserted here -->
+        </div>
+
+        <!-- Empty State -->
+        <div class="empty-state hidden" id="empty-state">
+            <div class="empty-icon">📋</div>
+            <h3 class="empty-title">ไม่มีข้อมูล</h3>
+            <p class="empty-message">ไม่พบข้อมูลตามเงื่อนไขที่เลือก</p>
+            <button class="clear-filters-btn" onclick="clearFilters()">ล้างตัวกรอง</button>
+        </div>
+
+        <!-- Loading -->
+        <div class="loading hidden" id="loading">
+            <div class="loading-spinner"></div>
+            <p>กำลังโหลดข้อมูล...</p>
+        </div>
+    </div>
+
+    <!-- Room Card Template -->
+    <template id="room-card-template">
+        <div class="room-card">
+            <div class="card-header">
+                <div class="room-info">
+                    <div class="room-no-container">
+                        <div class="room-no"></div>
+                        <div class="favorite-toggle">
+                            <input type="checkbox" class="favorite-checkbox">
+                            <label class="favorite-label">☆</label>
+                        </div>
+                    </div>
+                    <div class="sterile-tag"></div>
+                </div>
+                <div class="card-actions">
+                    <div class="sampling-toggle">
+                        <input type="checkbox" class="sampling-checkbox">
+                        <label class="checkbox-label"></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+                <div class="room-name"></div>
+
+                <div class="card-badges">
+                    <span class="floor-badge"></span>
+                    <span class="using-badge"></span>
+                </div>
+
+                <div class="sampling-info">
+                    <span class="sampling-icon">📅</span>
+                    <span class="sampling-date"></span>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
